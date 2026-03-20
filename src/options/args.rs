@@ -669,6 +669,7 @@ pub struct StyleArgs {
 
     #[arg(
         long,
+        alias = "border-type",
         value_name = "TYPE",
         value_parser = ["plain", "rounded", "double", "thick"],
         help = "Set the border type for the widgets. [possible values: plain, rounded, double, thick]"

@@ -1001,13 +1001,13 @@ impl BottomWidgetType {
     pub fn get_pretty_name(&self) -> &str {
         use BottomWidgetType::*;
         match self {
-            Cpu => "CPU",
-            Mem => "Memory",
-            Net => "Network",
-            Proc => "Processes",
-            Temp => "Temperature",
-            Disk => "Disks",
-            Battery => "Battery",
+            Cpu => "  CPU ",
+            Mem => "  Memory ",
+            Net => " 󰀂 Network ",
+            Proc => "  Processes ",
+            Temp => "  Temperature ",
+            Disk => " 󰋊 Disks ",
+            Battery => "  Battery ",
             _ => "",
         }
     }

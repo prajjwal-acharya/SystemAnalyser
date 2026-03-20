@@ -53,7 +53,7 @@ impl Painter {
                     self.styles.border_type,
                 )
                 .border_style(border_style)
-                .title_top(Line::styled(" Battery ", self.styles.widget_title_style));
+                .title_top(Line::styled("  Battery ", self.styles.widget_title_style));
 
                 if app_state.is_expanded {
                     block = block.title_top(

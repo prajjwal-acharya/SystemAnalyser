@@ -343,6 +343,50 @@ impl ProcWidgetData {
 }
 
 impl DataToCell<ProcColumn> for ProcWidgetData {
+    fn to_cell_text_styled(&self, column: &ProcColumn, calculated_width: NonZeroU16) -> Option<tui::text::Text<'static>> {
+        if let ProcColumn::State = column {
+            let width = calculated_width.get();
+            let mut state_str = self.process_state.to_string();
+
+            // Check if it has our inserted dot
+            if state_str.starts_with("● ") {
+                let dot_style = tui::style::Style::default().fg(tui::style::Color::Green);
+                let mut stripped = state_str.strip_prefix("● ").unwrap().to_string();
+
+                if stripped.len() + 2 > width as usize {
+                    stripped = unicode_ellipsis::truncate_str(&stripped, width.saturating_sub(2) as usize).to_string();
+                }
+
+                let spans = vec![
+                    tui::text::Span::styled("● ", dot_style),
+                    tui::text::Span::raw(stripped),
+                ];
+                return Some(tui::text::Line::from(spans).into());
+            } else if state_str == "Sleeping" {
+                let dot_style = tui::style::Style::default().fg(tui::style::Color::Yellow);
+                if state_str.len() + 2 > width as usize {
+                    state_str = unicode_ellipsis::truncate_str(&state_str, width.saturating_sub(2) as usize).to_string();
+                }
+                let spans = vec![
+                    tui::text::Span::styled("● ", dot_style),
+                    tui::text::Span::raw(state_str),
+                ];
+                return Some(tui::text::Line::from(spans).into());
+            } else if state_str == "Zombie" || state_str == "Dead" {
+                let dot_style = tui::style::Style::default().fg(tui::style::Color::Red);
+                if state_str.len() + 2 > width as usize {
+                    state_str = unicode_ellipsis::truncate_str(&state_str, width.saturating_sub(2) as usize).to_string();
+                }
+                let spans = vec![
+                    tui::text::Span::styled("● ", dot_style),
+                    tui::text::Span::raw(state_str),
+                ];
+                return Some(tui::text::Line::from(spans).into());
+            }
+        }
+        None
+    }
+
     fn to_cell_text(
         &self, column: &ProcColumn, calculated_width: NonZeroU16,
     ) -> Option<Cow<'static, str>> {

@@ -226,7 +226,7 @@ mod test {
 
     fn create_time_graph() -> TimeGraph<'static> {
         TimeGraph {
-            title: " Network ".into(),
+            title: " 󰀂 Network ".into(),
             x_min: -15000.0,
             hide_x_labels: false,
             y_bounds: AxisBound::Max(100.5),

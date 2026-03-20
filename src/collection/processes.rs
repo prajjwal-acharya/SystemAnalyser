@@ -186,7 +186,7 @@ pub(super) fn process_status_str(status: ProcessStatus) -> &'static str {
         if #[cfg(target_os = "linux")] {
             match status {
                 ProcessStatus::Idle => "Idle",
-                ProcessStatus::Run => "Runnable",
+                ProcessStatus::Run => "● Runnable",
                 ProcessStatus::Sleep => "Sleeping",
                 ProcessStatus::Stop => "Stopped",
                 ProcessStatus::Zombie => "Zombie",
@@ -200,13 +200,13 @@ pub(super) fn process_status_str(status: ProcessStatus) -> &'static str {
             }
         } else if #[cfg(target_os = "windows")] {
             match status {
-                ProcessStatus::Run => "Runnable",
+                ProcessStatus::Run => "● Runnable",
                 _ => "Unknown",
             }
         } else if #[cfg(target_os = "macos")] {
             match status {
                 ProcessStatus::Idle => "Idle",
-                ProcessStatus::Run => "Runnable",
+                ProcessStatus::Run => "● Runnable",
                 ProcessStatus::Sleep => "Sleeping",
                 ProcessStatus::Stop => "Stopped",
                 ProcessStatus::Zombie => "Zombie",
@@ -215,7 +215,7 @@ pub(super) fn process_status_str(status: ProcessStatus) -> &'static str {
         } else if #[cfg(target_os = "freebsd")] {
             match status {
                 ProcessStatus::Idle => "Idle",
-                ProcessStatus::Run => "Runnable",
+                ProcessStatus::Run => "● Runnable",
                 ProcessStatus::Sleep => "Sleeping",
                 ProcessStatus::Stop => "Stopped",
                 ProcessStatus::Zombie => "Zombie",

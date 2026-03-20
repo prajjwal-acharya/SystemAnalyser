@@ -255,7 +255,7 @@ impl ProcWidgetState {
         default_index: usize, default_order: SortOrder,
     ) -> ProcessTable {
         let inner_props = DataTableProps {
-            title: Some(" Processes ".into()),
+            title: Some("  Processes ".into()),
             table_gap: config.table_gap,
             left_to_right: true,
             is_basic: config.use_basic_mode,

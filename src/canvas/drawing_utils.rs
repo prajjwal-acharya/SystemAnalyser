@@ -30,7 +30,9 @@ pub fn should_hide_x_label(
 
 /// Return a widget block.
 pub fn widget_block(is_basic: bool, is_selected: bool, border_type: BorderType) -> Block<'static> {
-    let mut block = Block::default().border_type(border_type);
+    let mut block = Block::default()
+        .border_type(border_type)
+        .style(tui::style::Style::default().bg(tui::style::Color::Rgb(49, 50, 68))); // #313244
 
     if is_basic {
         if is_selected {
@@ -39,6 +41,7 @@ pub fn widget_block(is_basic: bool, is_selected: bool, border_type: BorderType) 
             block = block.borders(Borders::empty());
         }
     } else {
+        // Use borders for glassmorphism
         block = block.borders(Borders::all());
     }
 

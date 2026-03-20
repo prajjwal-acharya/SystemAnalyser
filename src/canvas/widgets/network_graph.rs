@@ -269,7 +269,7 @@ impl Painter {
                 graph_style: self.styles.graph_style,
                 border_style,
                 border_type: self.styles.border_type,
-                title: " Network ".into(),
+                title: " 󰀂 Network ".into(),
                 is_selected: app_state.current_widget.widget_id == widget_id,
                 is_expanded: app_state.is_expanded,
                 title_style: self.styles.widget_title_style,

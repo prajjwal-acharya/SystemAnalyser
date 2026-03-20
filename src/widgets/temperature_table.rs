@@ -95,7 +95,7 @@ impl TempWidgetState {
 
         let props = SortDataTableProps {
             inner: DataTableProps {
-                title: Some(" Temperatures ".into()),
+                title: Some("  Temperatures ".into()),
                 table_gap: config.table_gap,
                 left_to_right: false,
                 is_basic: config.use_basic_mode,

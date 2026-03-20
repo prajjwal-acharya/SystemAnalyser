@@ -196,11 +196,11 @@ impl Painter {
                         load_avg[0], load_avg[1], load_avg[2]
                     );
 
-                    concat_string::concat_string!(" CPU ", load_avg_str).into()
+                    concat_string::concat_string!("  CPU ", load_avg_str).into()
                 }
                 #[cfg(not(target_family = "unix"))]
                 {
-                    " CPU ".into()
+                    "  CPU ".into()
                 }
             };
 

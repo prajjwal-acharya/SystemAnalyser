@@ -173,6 +173,25 @@ impl ColumnHeader for DiskColumn {
 }
 
 impl DataToCell<DiskColumn> for DiskWidgetData {
+    fn to_cell_text_styled(&self, column: &DiskColumn, calculated_width: NonZeroU16) -> Option<tui::text::Text<'static>> {
+        if let DiskColumn::Disk = column {
+            let width = calculated_width.get();
+            let mut name = self.name.clone();
+
+            // Allow space for "● "
+            if name.len() + 2 > width as usize {
+                name = unicode_ellipsis::truncate_str(&name, width.saturating_sub(2) as usize).to_string();
+            }
+
+            let spans = vec![
+                tui::text::Span::styled("● ", tui::style::Style::default().fg(tui::style::Color::Green)),
+                tui::text::Span::raw(name),
+            ];
+            return Some(tui::text::Line::from(spans).into());
+        }
+        None
+    }
+
     // FIXME: (points_rework_v1) Can we change the return type to 'a instead of 'static?
     fn to_cell_text(
         &self, column: &DiskColumn, _calculated_width: NonZeroU16,
@@ -185,7 +204,7 @@ impl DataToCell<DiskColumn> for DiskWidgetData {
         }
 
         let text = match column {
-            DiskColumn::Disk => self.name.clone().into(),
+            DiskColumn::Disk => format!("● {}", self.name).into(),
             DiskColumn::Mount => self.mount_point.clone().into(),
             DiskColumn::Used => self.used_space(),
             DiskColumn::Free => self.free_space(),
@@ -298,7 +317,7 @@ impl DiskTableWidget {
     pub fn new(config: &AppConfigFields, palette: &Styles, columns: Option<&[DiskColumn]>) -> Self {
         let props = SortDataTableProps {
             inner: DataTableProps {
-                title: Some(" Disks ".into()),
+                title: Some(" 󰋊 Disks ".into()),
                 table_gap: config.table_gap,
                 left_to_right: true,
                 is_basic: config.use_basic_mode,

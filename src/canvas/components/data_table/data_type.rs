@@ -13,6 +13,12 @@ where
     /// the cell that will be displayed in the [`super::DataTable`].
     fn to_cell_text(&self, column: &H, calculated_width: NonZeroU16) -> Option<Cow<'static, str>>;
 
+    /// Returns a styled `tui::text::Text` instead of a plain string. If implemented,
+    /// this will be used instead of `to_cell_text`.
+    fn to_cell_text_styled(&self, _column: &H, _calculated_width: NonZeroU16) -> Option<tui::text::Text<'static>> {
+        None
+    }
+
     /// Given a column, how to style a cell if one needs to override the default styling.
     ///
     /// By default this just returns [`None`], deferring to the row or table styling.
