@@ -556,6 +556,44 @@ impl BottomLayout {
         }
     }
 
+    pub fn adjust_width(&mut self, widget_id: u64, delta: i16) {
+        for row in &mut self.rows {
+            for col in &mut row.children {
+                for col_row in &mut col.children {
+                    for widget in &col_row.children {
+                        if widget.widget_id == widget_id {
+                            if let Constraint::Fill(current) = col.constraint {
+                                let new_val = (current as i16 + delta).max(1) as u16;
+                                col.constraint = Constraint::Fill(new_val);
+                            }
+                            self.get_movement_mappings();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    pub fn adjust_height(&mut self, widget_id: u64, delta: i16) {
+        for row in &mut self.rows {
+            for col in &mut row.children {
+                for col_row in &mut col.children {
+                    for widget in &col_row.children {
+                        if widget.widget_id == widget_id {
+                            if let Constraint::Fill(current) = col_row.constraint {
+                                let new_val = (current as i16 + delta).max(1) as u16;
+                                col_row.constraint = Constraint::Fill(new_val);
+                            }
+                            self.get_movement_mappings();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     pub fn init_basic_default(use_battery: bool) -> Self {
         let table_widgets = if use_battery {
             let disk_widget = BottomWidget::new(BottomWidgetType::Disk, 4)

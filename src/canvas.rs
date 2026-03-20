@@ -36,7 +36,7 @@ pub struct Painter {
     previous_width: u16,
 
     /// The layout.
-    layout: BottomLayout,
+    pub layout: BottomLayout,
 }
 
 impl Painter {
@@ -257,6 +257,88 @@ impl Painter {
                         self.draw_battery(f, app_state, rect[0], app_state.current_widget.widget_id)
                     }
                     _ => {}
+                }
+            } else if app_state.is_hero_focused {
+                if let Some(frozen_draw_loc) = frozen_draw_loc {
+                    self.draw_frozen_indicator(f, frozen_draw_loc);
+                }
+
+                let chunks = Layout::default()
+                    .direction(Direction::Vertical)
+                    .constraints([Constraint::Percentage(80), Constraint::Percentage(20)])
+                    .split(terminal_size);
+
+                match &app_state.current_widget.widget_type {
+                    Cpu => self.draw_cpu(f, app_state, chunks[0], app_state.current_widget.widget_id),
+                    CpuLegend => self.draw_cpu(
+                        f,
+                        app_state,
+                        chunks[0],
+                        app_state.current_widget.widget_id - 1,
+                    ),
+                    Mem | BasicMem => self.draw_memory_graph(
+                        f,
+                        app_state,
+                        chunks[0],
+                        app_state.current_widget.widget_id,
+                    ),
+                    Disk => self.draw_disk_table(
+                        f,
+                        app_state,
+                        chunks[0],
+                        app_state.current_widget.widget_id,
+                    ),
+                    Temp => self.draw_temp_table(
+                        f,
+                        app_state,
+                        chunks[0],
+                        app_state.current_widget.widget_id,
+                    ),
+                    Net => {
+                        self.draw_network(f, app_state, chunks[0], app_state.current_widget.widget_id)
+                    }
+                    Proc | ProcSearch | ProcSort => {
+                        let widget_id = app_state.current_widget.widget_id
+                            - match &app_state.current_widget.widget_type {
+                                ProcSearch => 1,
+                                ProcSort => 2,
+                                _ => 0,
+                            };
+                        self.draw_process(f, app_state, chunks[0], widget_id);
+                    }
+                    Battery =>
+                    {
+                        #[cfg(feature = "battery")]
+                        self.draw_battery(f, app_state, chunks[0], app_state.current_widget.widget_id)
+                    }
+                    _ => {}
+                }
+
+                // Pass 2: Draw standard layout in chunks[1] (20% shelf)
+                let base = Layout::vertical(self.layout.rows.iter().map(|r| r.constraint))
+                    .split(chunks[1]);
+
+                for (br, base) in self.layout.rows.iter().zip(base.iter()) {
+                    let base =
+                        Layout::horizontal(br.children.iter().map(|bc| bc.constraint)).split(*base);
+
+                    for (bc, base) in br.children.iter().zip(base.iter()) {
+                        let base = Layout::vertical(bc.children.iter().map(|bcr| bcr.constraint))
+                            .split(*base);
+
+                        for (widgets, base) in bc.children.iter().zip(base.iter()) {
+                            let widget_draw_locs =
+                                Layout::horizontal(widgets.children.iter().map(|bw| bw.constraint))
+                                    .split(*base);
+
+                            self.draw_widgets_with_constraints(
+                                f,
+                                app_state,
+                                widgets,
+                                &widget_draw_locs,
+                            );
+                        }
+                    }
                 }
             } else if app_state.app_config_fields.use_basic_mode {
                 // Basic mode. This basically removes all graphs but otherwise

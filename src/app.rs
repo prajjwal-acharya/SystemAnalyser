@@ -91,6 +91,7 @@ pub struct App {
     pub(crate) process_kill_dialog: ProcessKillDialog,
     pub help_dialog_state: AppHelpDialogState,
     pub is_expanded: bool,
+    pub is_hero_focused: bool,
     pub is_force_redraw: bool,
     pub is_determining_widget_boundary: bool,
     pub basic_mode_use_percent: bool,
@@ -117,6 +118,7 @@ impl App {
             process_kill_dialog: ProcessKillDialog::default(),
             help_dialog_state: AppHelpDialogState::default(),
             is_expanded,
+            is_hero_focused: false,
             is_force_redraw: false,
             is_determining_widget_boundary: false,
             basic_mode_use_percent: false,
@@ -1232,6 +1234,7 @@ impl App {
             '-' => self.on_minus(),
             '=' => self.reset_zoom(),
             'e' => self.toggle_expand_widget(),
+            'x' => self.toggle_hero_focus(),
             's' => {
                 if let BottomWidgetType::Proc = self.current_widget.widget_type {
                     self.toggle_sort_menu()
@@ -1303,6 +1306,16 @@ impl App {
             self.is_force_redraw = true;
         } else {
             self.expand_widget();
+        }
+    }
+
+    pub fn toggle_hero_focus(&mut self) {
+        if self.is_hero_focused {
+            self.is_hero_focused = false;
+            self.is_force_redraw = true;
+        } else if !self.is_expanded {
+            self.is_hero_focused = true;
+            self.is_force_redraw = true;
         }
     }
 
