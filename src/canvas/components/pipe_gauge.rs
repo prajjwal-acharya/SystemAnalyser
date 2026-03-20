@@ -1,10 +1,22 @@
 use tui::{
     buffer::Buffer,
     layout::Rect,
-    style::Style,
+    style::{Color, Style},
     text::Line,
     widgets::{Block, Widget},
 };
+
+fn color_gradient(ratio: f64) -> Color {
+    let ratio = ratio.clamp(0.0, 1.0);
+    // Green (0, 255, 0) -> Yellow (255, 255, 0) -> Red (255, 0, 0)
+    if ratio < 0.5 {
+        let r = (255.0 * (ratio * 2.0)) as u8;
+        Color::Rgb(r, 255, 0)
+    } else {
+        let g = (255.0 * ((1.0 - ratio) * 2.0)) as u8;
+        Color::Rgb(255, g, 0)
+    }
+}
 
 #[derive(Debug, Clone, Copy, Default)]
 pub enum LabelLimit {
@@ -196,12 +208,20 @@ impl Widget for PipeGauge<'_> {
                     gauge_area.width,
                 );
 
+                let total_bars = end.saturating_sub(start);
                 let pipe_end =
-                    start + (f64::from(end.saturating_sub(start)) * self.ratio).floor() as u16;
+                    start + (f64::from(total_bars) * self.ratio).floor() as u16;
                 for col in start..pipe_end {
                     if let Some(cell) = buf.cell_mut((col, row)) {
+                        let bar_ratio = if total_bars <= 1 {
+                            0.0
+                        } else {
+                            (col - start) as f64 / (total_bars - 1) as f64
+                        };
+                        let fg_color = color_gradient(bar_ratio);
+
                         cell.set_symbol("|").set_style(Style {
-                            fg: self.gauge_style.fg,
+                            fg: Some(fg_color),
                             bg: None,
                             add_modifier: self.gauge_style.add_modifier,
                             sub_modifier: self.gauge_style.sub_modifier,
