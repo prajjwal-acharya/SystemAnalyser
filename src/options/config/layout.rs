@@ -245,10 +245,7 @@ mod test {
     use toml_edit::de::from_str;
 
     use super::*;
-    use crate::{
-        constants::DEFAULT_WIDGET_ID,
-        options::Config,
-    };
+    use crate::{constants::DEFAULT_WIDGET_ID, options::Config};
 
     const TEST_DEFAULT_LAYOUT: &str = r#"
 [[row]]
@@ -354,7 +351,10 @@ mod test {
     #[test]
     /// Tests the default setup.
     fn test_default_movement() {
-        let rows = from_str::<Config>(TEST_DEFAULT_LAYOUT).unwrap().row.unwrap();
+        let rows = from_str::<Config>(TEST_DEFAULT_LAYOUT)
+            .unwrap()
+            .row
+            .unwrap();
         let ret_bottom_layout = test_create_layout(&rows, DEFAULT_WIDGET_ID, None, 1, false);
 
         // Simple tests for the top CPU widget
@@ -472,7 +472,10 @@ mod test {
     #[test]
     /// Tests using cpu_left_legend.
     fn test_cpu_left_legend() {
-        let rows = from_str::<Config>(TEST_DEFAULT_LAYOUT).unwrap().row.unwrap();
+        let rows = from_str::<Config>(TEST_DEFAULT_LAYOUT)
+            .unwrap()
+            .row
+            .unwrap();
         let ret_bottom_layout = test_create_layout(&rows, DEFAULT_WIDGET_ID, None, 1, true);
 
         // Legend

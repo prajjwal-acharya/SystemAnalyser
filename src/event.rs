@@ -5,7 +5,10 @@ use std::sync::mpsc::Sender;
 use crossterm::event::{KeyCode, KeyEvent, KeyModifiers, MouseEvent, MouseEventKind};
 
 use crate::{
-    app::{App, layout_manager::{BottomLayout, WidgetDirection}},
+    app::{
+        App,
+        layout_manager::{BottomLayout, WidgetDirection},
+    },
     collection::Data,
 };
 
@@ -51,7 +54,8 @@ pub fn handle_mouse_event(event: MouseEvent, app: &mut App) {
 
 /// Handle a [`KeyEvent`].
 pub fn handle_key_event_or_break(
-    event: KeyEvent, app: &mut App, layout: &mut BottomLayout, reset_sender: &Sender<CollectionThreadEvent>,
+    event: KeyEvent, app: &mut App, layout: &mut BottomLayout,
+    reset_sender: &Sender<CollectionThreadEvent>,
 ) -> bool {
     // c_debug!("KeyEvent: {event:?}");
 
@@ -65,10 +69,18 @@ pub fn handle_key_event_or_break(
             KeyCode::Left => app.on_left_key(),
             KeyCode::Right => app.on_right_key(),
             KeyCode::Char(' ') if !app.is_in_search_widget() => app.on_space_key(),
-            KeyCode::Char('[') if !app.is_in_search_widget() => layout.adjust_width(app.current_widget.widget_id, -1),
-            KeyCode::Char(']') if !app.is_in_search_widget() => layout.adjust_width(app.current_widget.widget_id, 1),
-            KeyCode::Char('{') if !app.is_in_search_widget() => layout.adjust_height(app.current_widget.widget_id, 1),
-            KeyCode::Char('}') if !app.is_in_search_widget() => layout.adjust_height(app.current_widget.widget_id, -1),
+            KeyCode::Char('[') if !app.is_in_search_widget() => {
+                layout.adjust_width(app.current_widget.widget_id, -1)
+            }
+            KeyCode::Char(']') if !app.is_in_search_widget() => {
+                layout.adjust_width(app.current_widget.widget_id, 1)
+            }
+            KeyCode::Char('{') if !app.is_in_search_widget() => {
+                layout.adjust_height(app.current_widget.widget_id, 1)
+            }
+            KeyCode::Char('}') if !app.is_in_search_widget() => {
+                layout.adjust_height(app.current_widget.widget_id, -1)
+            }
             KeyCode::Char(caught_char) => app.on_char_key(caught_char),
             KeyCode::Esc => app.on_esc(),
             KeyCode::Enter => app.on_enter(),
@@ -136,8 +148,12 @@ pub fn handle_key_event_or_break(
                 KeyCode::Right => app.move_widget_selection(&WidgetDirection::Right),
                 KeyCode::Up => app.move_widget_selection(&WidgetDirection::Up),
                 KeyCode::Down => app.move_widget_selection(&WidgetDirection::Down),
-                KeyCode::Char('[') | KeyCode::Char('{') if !app.is_in_search_widget() => layout.adjust_height(app.current_widget.widget_id, 1),
-                KeyCode::Char(']') | KeyCode::Char('}') if !app.is_in_search_widget() => layout.adjust_height(app.current_widget.widget_id, -1),
+                KeyCode::Char('[') | KeyCode::Char('{') if !app.is_in_search_widget() => {
+                    layout.adjust_height(app.current_widget.widget_id, 1)
+                }
+                KeyCode::Char(']') | KeyCode::Char('}') if !app.is_in_search_widget() => {
+                    layout.adjust_height(app.current_widget.widget_id, -1)
+                }
                 KeyCode::Char(caught_char) => app.on_char_key(caught_char),
                 _ => {}
             }

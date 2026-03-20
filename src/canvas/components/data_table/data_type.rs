@@ -15,7 +15,9 @@ where
 
     /// Returns a styled `tui::text::Text` instead of a plain string. If implemented,
     /// this will be used instead of `to_cell_text`.
-    fn to_cell_text_styled(&self, _column: &H, _calculated_width: NonZeroU16) -> Option<tui::text::Text<'static>> {
+    fn to_cell_text_styled(
+        &self, _column: &H, _calculated_width: NonZeroU16,
+    ) -> Option<tui::text::Text<'static>> {
         None
     }
 

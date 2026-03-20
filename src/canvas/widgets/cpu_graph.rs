@@ -213,7 +213,9 @@ impl Painter {
                 title,
                 styles: &self.styles,
                 widget_id,
-                legend_position: Some(crate::canvas::components::time_graph::LegendPosition::TopRight),
+                legend_position: Some(
+                    crate::canvas::components::time_graph::LegendPosition::TopRight,
+                ),
                 legend_constraints: Some((Constraint::Ratio(3, 4), Constraint::Ratio(3, 4))),
             }
             .build()

@@ -39,13 +39,13 @@ impl Styles {
                 hex!("#ff9e64"),
                 hex!("#7dcfff"),
             ],
-            border_style: hex!("#292e42"), // Surface
+            border_style: hex!("#292e42"),             // Surface
             highlighted_border_style: hex!("#bb9af7"), // Magenta
-            text_style: hex!("#c0caf5"), // Text
+            text_style: hex!("#c0caf5"),               // Text
             selected_text_style: hex!("#1a1b26").bg(hex_colour!("#bb9af7")), // Base on Magenta
             table_header_style: hex!("#7aa2f7").add_modifier(Modifier::BOLD),
             widget_title_style: hex!("#c0caf5"),
-            graph_style: hex!("#292e42"), // Surface
+            graph_style: hex!("#292e42"),        // Surface
             graph_legend_style: hex!("#565f89"), // Comment
             high_battery: hex!("#9ece6a"),
             medium_battery: hex!("#e0af68"),
@@ -90,9 +90,9 @@ impl Styles {
                 hex!("#ff966c"),
                 hex!("#166775"),
             ],
-            border_style: hex!("#b4b5b9"), // Surface
+            border_style: hex!("#b4b5b9"),             // Surface
             highlighted_border_style: hex!("#9854f1"), // Magenta
-            text_style: hex!("#3760bf"), // Text
+            text_style: hex!("#3760bf"),               // Text
             selected_text_style: hex!("#d5d6db").bg(hex_colour!("#9854f1")), // Base on Magenta
             table_header_style: hex!("#34548a").add_modifier(Modifier::BOLD),
             widget_title_style: hex!("#3760bf"),

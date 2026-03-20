@@ -173,18 +173,24 @@ impl ColumnHeader for DiskColumn {
 }
 
 impl DataToCell<DiskColumn> for DiskWidgetData {
-    fn to_cell_text_styled(&self, column: &DiskColumn, calculated_width: NonZeroU16) -> Option<tui::text::Text<'static>> {
+    fn to_cell_text_styled(
+        &self, column: &DiskColumn, calculated_width: NonZeroU16,
+    ) -> Option<tui::text::Text<'static>> {
         if let DiskColumn::Disk = column {
             let width = calculated_width.get();
             let mut name = self.name.clone();
 
             // Allow space for "● "
             if name.len() + 2 > width as usize {
-                name = unicode_ellipsis::truncate_str(&name, width.saturating_sub(2) as usize).to_string();
+                name = unicode_ellipsis::truncate_str(&name, width.saturating_sub(2) as usize)
+                    .to_string();
             }
 
             let spans = vec![
-                tui::text::Span::styled("● ", tui::style::Style::default().fg(tui::style::Color::Green)),
+                tui::text::Span::styled(
+                    "● ",
+                    tui::style::Style::default().fg(tui::style::Color::Green),
+                ),
                 tui::text::Span::raw(name),
             ];
             return Some(tui::text::Line::from(spans).into());

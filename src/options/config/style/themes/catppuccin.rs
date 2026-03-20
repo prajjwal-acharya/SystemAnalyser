@@ -40,13 +40,13 @@ impl Styles {
                 hex!("#94e2d5"),
                 hex!("#89dceb"), // Sky
             ],
-            border_style: hex!("#585b70"), // Surface 2
+            border_style: hex!("#585b70"),             // Surface 2
             highlighted_border_style: hex!("#cba6f7"), // Mauve
-            text_style: hex!("#cdd6f4"), // Text
+            text_style: hex!("#cdd6f4"),               // Text
             selected_text_style: hex!("#1e1e2e").bg(hex_colour!("#cba6f7")), // Base on Mauve
             table_header_style: hex!("#89b4fa").add_modifier(Modifier::BOLD),
             widget_title_style: hex!("#cdd6f4"),
-            graph_style: hex!("#585b70"), // Surface 2
+            graph_style: hex!("#585b70"),        // Surface 2
             graph_legend_style: hex!("#a6adc8"), // Subtext 0
             high_battery: hex!("#a6e3a1"),
             medium_battery: hex!("#f9e2af"),
@@ -92,9 +92,9 @@ impl Styles {
                 hex!("#179299"),
                 hex!("#04a5e5"), // Sky
             ],
-            border_style: hex!("#9ca0b0"), // Surface 2
+            border_style: hex!("#9ca0b0"),             // Surface 2
             highlighted_border_style: hex!("#8839ef"), // Mauve
-            text_style: hex!("#4c4f69"), // Text
+            text_style: hex!("#4c4f69"),               // Text
             selected_text_style: hex!("#eff1f5").bg(hex_colour!("#8839ef")), // Base on Mauve
             table_header_style: hex!("#1e66f5").add_modifier(Modifier::BOLD),
             widget_title_style: hex!("#4c4f69"),

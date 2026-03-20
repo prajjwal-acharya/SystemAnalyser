@@ -191,79 +191,61 @@ pub(crate) const HELP_TEXT: [&[&str]; HELP_CONTENTS_TEXT.len()] = [
 
 pub(crate) const DEFAULT_LAYOUT: &str = r#"
 [[row]]
-  ratio=30
+  ratio=100
   [[row.child]]
-    ratio=30
-    type="empty"
-  [[row.child]]
-    ratio=70
-    type="cpu"
-[[row]]
-    ratio=40
-    [[row.child]]
-      ratio=30
-      type="empty"
-    [[row.child]]
+    ratio=65
+    [[row.child.child]]
+      type="cpu"
+      ratio=60
+    [[row.child.child]]
+      type="proc"
       ratio=40
+      default=true
+  [[row.child]]
+    ratio=35
+    [[row.child.child]]
       type="mem"
-    [[row.child]]
-      ratio=30
-      [[row.child.child]]
-        type="temp"
-      [[row.child.child]]
-        type="disk"
-[[row]]
-  ratio=30
-  [[row.child]]
-    ratio=30
-    type="empty"
-  [[row.child]]
-    ratio=35
-    type="net"
-  [[row.child]]
-    ratio=35
-    type="proc"
-    default=true
+      ratio=1
+    [[row.child.child]]
+      type="net"
+      ratio=1
+    [[row.child.child]]
+      type="temp"
+      ratio=1
+    [[row.child.child]]
+      type="disk"
+      ratio=1
 "#;
 
 pub(crate) const DEFAULT_BATTERY_LAYOUT: &str = r#"
 [[row]]
-  ratio=30
+  ratio=100
   [[row.child]]
-    ratio=30
-    type="empty"
-  [[row.child]]
-    ratio=45
-    type="cpu"
-  [[row.child]]
-    ratio=25
-    type="battery"
-[[row]]
-    ratio=40
-    [[row.child]]
-      ratio=30
-      type="empty"
-    [[row.child]]
+    ratio=65
+    [[row.child.child]]
+      type="cpu"
+      ratio=60
+    [[row.child.child]]
+      type="proc"
       ratio=40
+      default=true
+  [[row.child]]
+    ratio=35
+    [[row.child.child]]
       type="mem"
-    [[row.child]]
-      ratio=30
-      [[row.child.child]]
-        type="temp"
-      [[row.child.child]]
-        type="disk"
-[[row]]
-  ratio=30
-  [[row.child]]
-    ratio=30
-    type="empty"
-  [[row.child]]
-    ratio=35
-    type="net"
-  [[row.child]]
-    ratio=35
-    type="proc"
-    default=true
+      ratio=1
+    [[row.child.child]]
+      type="battery"
+      ratio=1
+    [[row.child.child]]
+      type="net"
+      ratio=1
+    [[row.child.child]]
+      type="temp"
+      ratio=1
+    [[row.child.child]]
+      type="disk"
+      ratio=1
 "#;
 
 // TODO: Eventually deprecate this, or grab from a file.

@@ -39,13 +39,13 @@ impl Styles {
                 hex!("#ffb86c"),
                 hex!("#8be9fd"),
             ],
-            border_style: hex!("#6272a4"), // Comment
+            border_style: hex!("#6272a4"),             // Comment
             highlighted_border_style: hex!("#ff79c6"), // Pink
-            text_style: hex!("#f8f8f2"), // Foreground
+            text_style: hex!("#f8f8f2"),               // Foreground
             selected_text_style: hex!("#282a36").bg(hex_colour!("#ff79c6")), // Background on Pink
             table_header_style: hex!("#bd93f9").add_modifier(Modifier::BOLD), // Purple
             widget_title_style: hex!("#f8f8f2"),
-            graph_style: hex!("#6272a4"), // Comment
+            graph_style: hex!("#6272a4"),        // Comment
             graph_legend_style: hex!("#6272a4"), // Comment
             high_battery: hex!("#50fa7b"),
             medium_battery: hex!("#f1fa8c"),

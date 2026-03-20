@@ -343,7 +343,9 @@ impl ProcWidgetData {
 }
 
 impl DataToCell<ProcColumn> for ProcWidgetData {
-    fn to_cell_text_styled(&self, column: &ProcColumn, calculated_width: NonZeroU16) -> Option<tui::text::Text<'static>> {
+    fn to_cell_text_styled(
+        &self, column: &ProcColumn, calculated_width: NonZeroU16,
+    ) -> Option<tui::text::Text<'static>> {
         if let ProcColumn::State = column {
             let width = calculated_width.get();
             let mut state_str = self.process_state.to_string();
@@ -354,7 +356,9 @@ impl DataToCell<ProcColumn> for ProcWidgetData {
                 let mut stripped = state_str.strip_prefix("● ").unwrap().to_string();
 
                 if stripped.len() + 2 > width as usize {
-                    stripped = unicode_ellipsis::truncate_str(&stripped, width.saturating_sub(2) as usize).to_string();
+                    stripped =
+                        unicode_ellipsis::truncate_str(&stripped, width.saturating_sub(2) as usize)
+                            .to_string();
                 }
 
                 let spans = vec![
@@ -365,7 +369,11 @@ impl DataToCell<ProcColumn> for ProcWidgetData {
             } else if state_str == "Sleeping" {
                 let dot_style = tui::style::Style::default().fg(tui::style::Color::Yellow);
                 if state_str.len() + 2 > width as usize {
-                    state_str = unicode_ellipsis::truncate_str(&state_str, width.saturating_sub(2) as usize).to_string();
+                    state_str = unicode_ellipsis::truncate_str(
+                        &state_str,
+                        width.saturating_sub(2) as usize,
+                    )
+                    .to_string();
                 }
                 let spans = vec![
                     tui::text::Span::styled("● ", dot_style),
@@ -375,7 +383,11 @@ impl DataToCell<ProcColumn> for ProcWidgetData {
             } else if state_str == "Zombie" || state_str == "Dead" {
                 let dot_style = tui::style::Style::default().fg(tui::style::Color::Red);
                 if state_str.len() + 2 > width as usize {
-                    state_str = unicode_ellipsis::truncate_str(&state_str, width.saturating_sub(2) as usize).to_string();
+                    state_str = unicode_ellipsis::truncate_str(
+                        &state_str,
+                        width.saturating_sub(2) as usize,
+                    )
+                    .to_string();
                 }
                 let spans = vec![
                     tui::text::Span::styled("● ", dot_style),

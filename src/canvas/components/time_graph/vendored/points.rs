@@ -86,20 +86,45 @@ impl TimeChart<'_> {
                             color,
                         });
 
-                        // Draw vertical fill lines to create an area chart effect
+                        // Draw vertical fill lines to create an area chart effect with vertical gradient
                         let fill_steps = 4;
                         for i in 0..=fill_steps {
                             let t = i as f64 / fill_steps as f64;
                             let x = curr.0 + (next.0 - curr.0) * t;
                             let y = curr.1 + (next.1 - curr.1) * t;
                             if y > 0.0 {
+                                // Draw Segment 1: Green (0 to 40)
+                                let y_green = y.min(40.0);
                                 ctx.draw(&CanvasLine {
                                     x1: x,
                                     y1: 0.0,
                                     x2: x,
-                                    y2: y,
-                                    color,
+                                    y2: y_green,
+                                    color: Color::Green,
                                 });
+
+                                // Draw Segment 2: Yellow (40 to 75)
+                                if y > 40.0 {
+                                    let y_yellow = y.min(75.0);
+                                    ctx.draw(&CanvasLine {
+                                        x1: x,
+                                        y1: 40.0,
+                                        x2: x,
+                                        y2: y_yellow,
+                                        color: Color::Yellow,
+                                    });
+                                }
+
+                                // Draw Segment 3: Red (75 to 100)
+                                if y > 75.0 {
+                                    ctx.draw(&CanvasLine {
+                                        x1: x,
+                                        y1: 75.0,
+                                        x2: x,
+                                        y2: y.min(100.0),
+                                        color: Color::Red,
+                                    });
+                                }
                             }
                         }
                     } else {

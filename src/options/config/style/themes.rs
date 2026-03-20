@@ -1,11 +1,11 @@
 //! A set of pre-defined themes.
 
+pub(super) mod catppuccin;
 pub(super) mod default;
+pub(super) mod dracula;
 pub(super) mod gruvbox;
 pub(super) mod nord;
-pub(super) mod catppuccin;
 pub(super) mod tokyonight;
-pub(super) mod dracula;
 
 /// Convert a [`tui::style::Color`] into a [`tui::style::Style`] with the color as the foreground.
 macro_rules! color {

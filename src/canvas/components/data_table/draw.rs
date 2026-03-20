@@ -217,24 +217,31 @@ where
                                 .iter()
                                 .zip(&self.state.calculated_widths)
                                 .filter_map(|(column, &width)| {
-                                    if let Some(text) = data_row.to_cell_text_styled(column.inner(), width) {
+                                    if let Some(text) =
+                                        data_row.to_cell_text_styled(column.inner(), width)
+                                    {
                                         let mut cell = Cell::new(text);
-                                        if let Some(style) = data_row.style_cell(column.inner(), painter) {
+                                        if let Some(style) =
+                                            data_row.style_cell(column.inner(), painter)
+                                        {
                                             cell = cell.style(style);
                                         }
                                         Some(cell)
                                     } else {
-                                        data_row.to_cell_text(column.inner(), width).map(|content| {
-                                            let content = truncate_to_text(&content, width.get());
+                                        data_row.to_cell_text(column.inner(), width).map(
+                                            |content| {
+                                                let content =
+                                                    truncate_to_text(&content, width.get());
 
-                                            if let Some(style) =
-                                                data_row.style_cell(column.inner(), painter)
-                                            {
-                                                Cell::new(content).style(style)
-                                            } else {
-                                                Cell::new(content)
-                                            }
-                                        })
+                                                if let Some(style) =
+                                                    data_row.style_cell(column.inner(), painter)
+                                                {
+                                                    Cell::new(content).style(style)
+                                                } else {
+                                                    Cell::new(content)
+                                                }
+                                            },
+                                        )
                                     }
                                 }),
                         );

@@ -269,7 +269,9 @@ impl Painter {
                     .split(terminal_size);
 
                 match &app_state.current_widget.widget_type {
-                    Cpu => self.draw_cpu(f, app_state, chunks[0], app_state.current_widget.widget_id),
+                    Cpu => {
+                        self.draw_cpu(f, app_state, chunks[0], app_state.current_widget.widget_id)
+                    }
                     CpuLegend => self.draw_cpu(
                         f,
                         app_state,
@@ -294,9 +296,12 @@ impl Painter {
                         chunks[0],
                         app_state.current_widget.widget_id,
                     ),
-                    Net => {
-                        self.draw_network(f, app_state, chunks[0], app_state.current_widget.widget_id)
-                    }
+                    Net => self.draw_network(
+                        f,
+                        app_state,
+                        chunks[0],
+                        app_state.current_widget.widget_id,
+                    ),
                     Proc | ProcSearch | ProcSort => {
                         let widget_id = app_state.current_widget.widget_id
                             - match &app_state.current_widget.widget_type {
@@ -309,7 +314,12 @@ impl Painter {
                     Battery =>
                     {
                         #[cfg(feature = "battery")]
-                        self.draw_battery(f, app_state, chunks[0], app_state.current_widget.widget_id)
+                        self.draw_battery(
+                            f,
+                            app_state,
+                            chunks[0],
+                            app_state.current_widget.widget_id,
+                        )
                     }
                     _ => {}
                 }

@@ -29,7 +29,9 @@ fn memory_legend_label(name: &str, data: Option<&MemData>) -> String {
 
         if name == "RAM" {
             let free = (total_bytes - data.used_bytes) as f64 / denominator;
-            format!("{name}:{percentage:3.0}%   Used: {used:.1}{unit} | Free: {free:.1}{unit} | Total: {total:.1}{unit}")
+            format!(
+                "{name}:{percentage:3.0}%   Used: {used:.1}{unit} | Free: {free:.1}{unit} | Total: {total:.1}{unit}"
+            )
         } else {
             format!("{name}:{percentage:3.0}%   {used:.1}{unit}/{total:.1}{unit}")
         }
