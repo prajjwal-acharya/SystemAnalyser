@@ -14,7 +14,7 @@ impl Styles {
         const FOURTH_COLOUR: Color = Color::LightGreen;
         #[cfg(not(target_os = "windows"))]
         const FIFTH_COLOUR: Color = Color::LightRed;
-        const HIGHLIGHT_COLOUR: Color = Color::LightBlue;
+        const HIGHLIGHT_COLOUR: Color = Color::LightGreen;
         const AVG_COLOUR: Color = Color::Red;
         const ALL_COLOUR: Color = Color::Green;
         const DEFAULT_SELECTED_TEXT_STYLE: Style = color!(Color::Black).bg(HIGHLIGHT_COLOUR);
@@ -66,7 +66,7 @@ impl Styles {
             low_battery: color!(Color::Red),
             invalid_query_style: color!(Color::Red),
             disabled_text_style: color!(Color::DarkGray),
-            border_type: BorderType::Plain,
+            border_type: BorderType::Thick,
             #[cfg(target_os = "linux")]
             thread_text_style: color!(Color::Green),
         }
